@@ -1,0 +1,17 @@
+<?php
+/**
+ * Copyright: STORY DESIGN Sp. z o.o.
+ * Author: Yaroslav Shatkevich
+ * Date: 05.05.15
+ * Time: 23:29
+ */
+
+return [
+    'bt_payments' => [
+        'environment' => 'sandbox',
+        'merchant_id' => '',
+        'public_key' => '',
+        'private_key' => '',
+        'customer_class' => '',
+    ],
+];
