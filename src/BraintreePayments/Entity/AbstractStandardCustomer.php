@@ -350,6 +350,7 @@ class AbstractStandardCustomer extends AbstractUpdateableEntity implements Custo
     /**
      * Array of discount structures:
      * array['product'] - discounted product ID
+     * array['lang'] - language ID
      * array['discount'] - BrainTree discount ID
      *
      * @param array $discounts
