@@ -238,6 +238,21 @@ class AbstractStandardCustomer extends AbstractUpdateableEntity implements Custo
             ->setVatNumber($customerData['vatNumber']);
     }
 
+    public function extractFormData()
+    {
+        return [
+            'customer' => [
+                'address' => $this->getAddress(),
+                'postalCode' => $this->getPostalCode(),
+                'city' => $this->getCity(),
+                'country' => $this->getCountry(),
+                'firstName' => $this->getFirstName(),
+                'lastName' => $this->getLastName(),
+                'vatNumber' => $this->getVatNumber(),
+            ],
+        ];
+    }
+
     /**
      * Get array data used for store user in Braintree vault
      *
