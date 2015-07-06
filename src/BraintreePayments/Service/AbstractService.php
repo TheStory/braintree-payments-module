@@ -14,6 +14,10 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 abstract class AbstractService implements ServiceLocatorAwareInterface
 {
     private $serviceLocator;
+    /**
+     * @var bool is Braintree environment initialized
+     */
+    private $isInitialized = false;
 
     /**
      * Set service locator
@@ -41,16 +45,20 @@ abstract class AbstractService implements ServiceLocatorAwareInterface
     }
 
     /**
-     * Initial config of Braintree, called before Braintree API communication operations
+     * Initial config of Braintree, should becalled before Braintree API communication operations
      */
     protected function initEnvironment()
     {
-        $config = $this->getServiceLocator()->get('config')['bt_payments'];
+        if ($this->isInitialized === false) {
+            $config = $this->getServiceLocator()->get('config')['bt_payments'];
 
-        \Braintree_Configuration::environment($config['environment']);
-        \Braintree_Configuration::merchantId($config['merchant_id']);
-        \Braintree_Configuration::publicKey($config['public_key']);
-        \Braintree_Configuration::privateKey($config['private_key']);
+            \Braintree_Configuration::environment($config['environment']);
+            \Braintree_Configuration::merchantId($config['merchant_id']);
+            \Braintree_Configuration::publicKey($config['public_key']);
+            \Braintree_Configuration::privateKey($config['private_key']);
+
+            $this->isInitialized = true;
+        }
     }
 
     /**

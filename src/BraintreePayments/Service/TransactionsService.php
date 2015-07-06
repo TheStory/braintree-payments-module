@@ -68,7 +68,7 @@ class TransactionsService extends AbstractService implements EventManagerAwareIn
         $isRegistration = false;
 
         /** @var CustomersService $customerService */
-        $customerService = $this->getServiceLocator()->get('svc.payment_customers');
+        $customerService = $this->getServiceLocator()->get(BT_CUSTOMERS_SERVICE);
         if ($customer = $sale->getCustomer()) { // sale with customer
             if ($customer->getCustomerId()) { // existing customer
                 if (!$customerService->exists($customer)) { // check id in vault

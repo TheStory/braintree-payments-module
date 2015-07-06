@@ -10,6 +10,8 @@ namespace BraintreePayments\Service;
 
 use BraintreePayments\Model\CreditCard;
 use BraintreePayments\Model\CustomerInterface;
+use BraintreePayments\Model\Discount;
+use BraintreePayments\src\BraintreePayments\Service\DiscountsService;
 
 /**
  * Factory and proxy methods for Braintree communication
@@ -117,5 +119,27 @@ class CustomersService extends AbstractService
         $this->validateResponse($result);
 
         $customerInterface->setCustomerId(null);
+    }
+
+    /**
+     * Check if user has active subscription
+     *
+     * @param CustomerInterface $customerInterface
+     * @return bool
+     * @throws \Exception
+     */
+    public function hasValidSubscription(CustomerInterface $customerInterface)
+    {
+        if (!$customerInterface->getSubscriptionId()) {
+            return false;
+        }
+
+        $this->initEnvironment();
+
+        $result = \Braintree_Subscription::find($customerInterface->getSubscriptionId());
+
+        $this->validateResponse($result);
+
+        return $result->status == \Braintree_Subscription::ACTIVE;
     }
 }

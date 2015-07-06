@@ -70,6 +70,7 @@ class CreditCardFieldset extends Fieldset implements InputFilterProviderInterfac
                 'options' => [
                     'label'         => 'Month',
                     'value_options' => array_combine($monthsRange, $monthsRange),
+                    'empty_option'  => '-- Month --',
                     'value'         => date('m'),
                 ],
             ]
@@ -83,6 +84,7 @@ class CreditCardFieldset extends Fieldset implements InputFilterProviderInterfac
                 'options' => [
                     'label'         => 'Year',
                     'value_options' => array_combine($yearsRange, $yearsRange),
+                    'empty_option'  => '-- Year --',
                 ],
             ]
         );

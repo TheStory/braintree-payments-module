@@ -29,6 +29,16 @@ class AbstractStandardCustomer extends AbstractUpdateableEntity implements Custo
     protected $customerId;
     /**
      * @var string
+     * @Column(type="string", name="subscription_id")
+     */
+    protected $subscriptionId;
+    /**
+     * @var string
+     * @Column(type="string")
+     */
+    protected $discounts;
+    /**
+     * @var string
      */
     protected $companyName;
     /**
@@ -147,6 +157,42 @@ class AbstractStandardCustomer extends AbstractUpdateableEntity implements Custo
     public function setCustomerId($customerId)
     {
         $this->customerId = $customerId;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSubscriptionId()
+    {
+        return $this->subscriptionId;
+    }
+
+    /**
+     * @param $id
+     * @return AbstractStandardCustomer
+     */
+    public function setSubscriptionId($id)
+    {
+        $this->subscriptionId = $id;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDiscountId()
+    {
+        return $this->discountId;
+    }
+
+    /**
+     * @param string $discountId
+     * @return AbstractStandardCustomer
+     */
+    public function setDiscountId($discountId)
+    {
+        $this->discountId = $discountId;
         return $this;
     }
 
@@ -290,6 +336,28 @@ class AbstractStandardCustomer extends AbstractUpdateableEntity implements Custo
     public function setVatNumber($vatNumber)
     {
         $this->vatNumber = $vatNumber;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDiscounts()
+    {
+        return json_decode($this->discounts) ?: [];
+    }
+
+    /**
+     * Array of discount structures:
+     * array['product'] - discounted product ID
+     * array['discount'] - BrainTree discount ID
+     *
+     * @param array $discounts
+     * @return AbstractStandardCustomer
+     */
+    public function setDiscounts(array $discounts)
+    {
+        $this->discounts = json_encode($discounts);
         return $this;
     }
 }
