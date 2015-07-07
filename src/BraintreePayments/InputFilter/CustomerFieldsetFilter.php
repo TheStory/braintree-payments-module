@@ -8,7 +8,9 @@
 
 namespace BraintreePayments\InputFilter;
 
+use BraintreePayments\Validator\VatValidator;
 use Zend\InputFilter\InputFilter;
+use Zend\Validator\NotEmpty;
 
 class CustomerFieldsetFilter extends InputFilter
 {
@@ -78,14 +80,13 @@ class CustomerFieldsetFilter extends InputFilter
             [
                 'name'              => 'vatNumber',
                 'required'          => true,
-                'allow_empty'       => true,
-                'continue_if_empty' => true,
                 'filters'           => [
                     ['name' => 'string_trim'],
                     ['name' => 'strip_tags'],
                 ],
                 'validators'        => [
-                    ['name' => 'BraintreePayments\Validator\VatValidator'],
+                    new NotEmpty(NotEmpty::NULL),
+                    new VatValidator(),
                 ],
             ]
         );

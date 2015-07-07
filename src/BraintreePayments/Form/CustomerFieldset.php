@@ -15,6 +15,8 @@ use Zend\InputFilter\InputFilterProviderInterface;
 
 class CustomerFieldset extends Fieldset implements InputFilterProviderInterface
 {
+    protected $currentInputFilters;
+
     public function __construct()
     {
         parent::__construct('customer');
@@ -112,7 +114,29 @@ class CustomerFieldset extends Fieldset implements InputFilterProviderInterface
      */
     public function getInputFilterSpecification()
     {
-        $filter = new CustomerFieldsetFilter();
-        return $filter->getInputs();
+        if (!$this->currentInputFilters) {
+            $filter = new CustomerFieldsetFilter();
+            $this->currentInputFilters = $filter->getInputs();
+        }
+
+        return $this->currentInputFilters;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCurrentInputFilters()
+    {
+        return $this->currentInputFilters;
+    }
+
+    /**
+     * @param array $currentInputFilters
+     * @return CustomerFieldset
+     */
+    public function setCurrentInputFilters(array $currentInputFilters)
+    {
+        $this->currentInputFilters = $currentInputFilters;
+        return $this;
     }
 }
