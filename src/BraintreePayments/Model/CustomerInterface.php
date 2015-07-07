@@ -43,6 +43,17 @@ interface CustomerInterface
      */
     public function setDiscountId($id);
 
+    /**
+     * @return string|null
+     */
+    public function getCreditCard();
+
+    /**
+     * @param string $id
+     * @return CustomerInterface
+     */
+    public function setCreditCard($id);
+
     public function hydrateApiCustomer(\Braintree_Customer $customer);
 
     public function extractForApi();

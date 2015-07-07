@@ -58,13 +58,47 @@ class CustomersService extends AbstractService
     }
 
     /**
+     * Init customer with data from
+     *
+     * @param CustomerInterface $customerInterface
+     * @return bool
+     */
+    public function init(CustomerInterface $customerInterface)
+    {
+        if (!$customerInterface->getCustomerId()) {
+            return false;
+        }
+
+        $btCustomer = $this->find($customerInterface->getCustomerId());
+
+        if (!$btCustomer) {
+            return false;
+        }
+
+        $customerInterface->hydrateApiCustomer($btCustomer);
+
+        if (count($btCustomer->creditCards)) {
+
+            $defaultCard = $btCustomer->creditCards[0];
+            $customerInterface->setCreditCard([
+                'last' => $defaultCard->last4,
+                'img' => $defaultCard->imageUrl,
+            ]);
+        }
+
+        return true;
+    }
+
+    /**
      * Save new user data in vault
      *
      * @param CustomerInterface $customerInterface
      * @param CreditCard $card
      */
-    public function store(CustomerInterface $customerInterface, CreditCard $card)
+    public function store(CustomerInterface $customerInterface, CreditCard $card = null)
     {
+        $this->initEnvironment();
+
         $customerData = $customerInterface->extractForApi();
         $req = array_merge_recursive(['creditCard' => $card->extract()], $customerData);
 
@@ -83,6 +117,8 @@ class CustomersService extends AbstractService
      */
     public function update(CustomerInterface $customerInterface, CreditCard $card = null)
     {
+        $this->initEnvironment();
+
         // Prepare data
         $customerData = $customerInterface->extractForApi();
         $newDefaultAddress = $customerData['creditCard']['billingAddress'];

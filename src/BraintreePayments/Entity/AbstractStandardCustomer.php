@@ -69,6 +69,10 @@ class AbstractStandardCustomer extends AbstractUpdateableEntity implements Custo
      * @var string
      */
     protected $postalCode;
+    /**
+     * @var string
+     */
+    protected $defaultCard;
 
     /**
      * @return string
@@ -374,6 +378,24 @@ class AbstractStandardCustomer extends AbstractUpdateableEntity implements Custo
     public function setDiscounts(array $discounts)
     {
         $this->discounts = json_encode($discounts);
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCreditCard()
+    {
+        return $this->defaultCard;
+    }
+
+    /**
+     * @param string $id
+     * @return CustomerInterface
+     */
+    public function setCreditCard($id)
+    {
+        $this->defaultCard = $id;
         return $this;
     }
 }
