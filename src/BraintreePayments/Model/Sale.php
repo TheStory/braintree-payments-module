@@ -11,9 +11,19 @@ namespace BraintreePayments\Model;
 class Sale
 {
     /**
-     * @var string
+     * @var int
      */
     protected $amount;
+
+    /**
+     * @var string
+     */
+    protected $currency;
+
+    /**
+     * @var int
+     */
+    protected $tax;
 
     /**
      * @var CreditCard
@@ -26,7 +36,7 @@ class Sale
     protected $customer;
 
     /**
-     * @return string
+     * @return int
      */
     public function getAmount()
     {
@@ -34,7 +44,7 @@ class Sale
     }
 
     /**
-     * @param string $amount
+     * @param int $amount
      * @return Sale
      */
     public function setAmount($amount)
@@ -76,6 +86,42 @@ class Sale
     public function setCustomer(CustomerInterface $customer)
     {
         $this->customer = $customer;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
+    }
+
+    /**
+     * @param string $currency
+     * @return Sale
+     */
+    public function setCurrency($currency)
+    {
+        $this->currency = $currency;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTax()
+    {
+        return $this->tax;
+    }
+
+    /**
+     * @param int $tax
+     * @return Sale
+     */
+    public function setTax($tax)
+    {
+        $this->tax = $tax;
         return $this;
     }
 }

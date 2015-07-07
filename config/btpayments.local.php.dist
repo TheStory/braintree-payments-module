@@ -9,9 +9,14 @@
 return [
     'bt_payments' => [
         'environment' => 'sandbox',
+        'merchant_accounts' => [
+            'USD' => '',
+            'PLN' => '',
+        ],
         'merchant_id' => '',
         'public_key' => '',
         'private_key' => '',
         'customer_class' => '',
     ],
 ];
+

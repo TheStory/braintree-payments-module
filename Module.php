@@ -5,6 +5,8 @@ use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 
 class Module implements AutoloaderProviderInterface
 {
+    // @todo Check module configuration
+
     public function getAutoloaderConfig()
     {
         return array(

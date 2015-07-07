@@ -40,11 +40,13 @@ class CustomersService extends AbstractService
         return $customerExists;
     }
 
+
     /**
      * Find customer in service
      *
      * @param $id
-     * @return null|\Braintree_Customer
+     * @return \Braintree_Customer|null
+     * @throws \Exception
      */
     public function find($id)
     {
@@ -53,8 +55,12 @@ class CustomersService extends AbstractService
         try {
             return \Braintree_Customer::find($id);
         } catch (\Braintree_Exception_NotFound $e) {
-            return null;
+        } catch (\Exception $e) {
+            var_dump($e);
+            throw $e;
         }
+
+        return null;
     }
 
     /**

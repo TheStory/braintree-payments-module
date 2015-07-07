@@ -61,11 +61,29 @@ class TransactionsService extends AbstractService implements EventManagerAwareIn
     public function sale(Sale $sale)
     {
         $this->initEnvironment();
-
-        $salesData = [
-            'amount' => $sale->getAmount(),
-        ];
+        $config = $this->getServiceLocator()->get('config')['bt_payments'];
         $isRegistration = false;
+
+        // set default currency if not provided in sale object
+        if (!$sale->getCurrency()) {
+            $sale->setCurrency($config['default_currency']);
+        }
+
+        // calculate price
+        $amount = $sale->getAmount();
+        $tax = $sale->getTax();
+        $taxAmount = 0;
+        if ($tax) {
+            $taxAmount = $sale->getAmount() * $sale->getTax() / 100;
+            $amount += $taxAmount;
+        }
+
+        // prepare sales data
+        $salesData = [
+            'amount' => (string)sprintf('%01.2F', $amount),
+            'taxAmount' => (string)sprintf('%01.2F', $taxAmount),
+            'merchantAccountId' => $config['merchant_accounts'][$sale->getCurrency()],
+        ];
 
         /** @var CustomersService $customerService */
         $customerService = $this->getServiceLocator()->get(BT_CUSTOMERS_SERVICE);
