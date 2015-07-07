@@ -246,6 +246,7 @@ class AbstractStandardCustomer extends AbstractUpdateableEntity implements Custo
     {
         return [
             'customer' => [
+                'companyName' => $this->getCompanyName(),
                 'address' => $this->getAddress(),
                 'postalCode' => $this->getPostalCode(),
                 'city' => $this->getCity(),
