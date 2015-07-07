@@ -87,6 +87,7 @@ class CustomersService extends AbstractService
 
             $defaultCard = $btCustomer->creditCards[0];
             $customerInterface->setCreditCard([
+                'token' => $defaultCard->token,
                 'last' => $defaultCard->last4,
                 'img' => $defaultCard->imageUrl,
             ]);
