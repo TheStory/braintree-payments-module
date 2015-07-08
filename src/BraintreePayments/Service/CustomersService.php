@@ -177,12 +177,10 @@ class CustomersService extends AbstractService
             return false;
         }
 
-        $this->initEnvironment();
+        /** @var SubscriptionsService $subscriptions */
+        $subscriptions = $this->getServiceLocator()->get(BT_SUBSCRIPTIONS_SERVICE);
+        $subscription = $subscriptions->find($customerInterface->getSubscriptionId());
 
-        $result = \Braintree_Subscription::find($customerInterface->getSubscriptionId());
-
-        $this->validateResponse($result);
-
-        return $result->status == \Braintree_Subscription::ACTIVE;
+        return $subscription->status == \Braintree_Subscription::ACTIVE;
     }
 }

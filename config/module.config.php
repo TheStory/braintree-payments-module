@@ -6,6 +6,7 @@ define('BT_PLANS_SERVICE', 'svc.payment_plans');
 define('BT_DISCOUNTS_SERVICE', 'svc.payment_discounts');
 define('BT_TRANSACTIONS_SERVICE', 'svc.payment_transactions');
 define('BT_TAXES_SERVICE', 'svc.payment_taxes');
+define('BT_SUBSCRIPTIONS_SERVICE', 'svc.payment_subscriptions');
 
 return [
     'bt_payments' => [
@@ -18,6 +19,7 @@ return [
             BT_TRANSACTIONS_SERVICE => 'BraintreePayments\Service\TransactionsService',
             BT_DISCOUNTS_SERVICE => 'BraintreePayments\Service\DiscountsService',
             BT_TAXES_SERVICE => 'BraintreePayments\Service\TaxesService',
+            BT_SUBSCRIPTIONS_SERVICE => 'BraintreePayments\Service\SubscriptionsService',
         ],
     ],
 ];
