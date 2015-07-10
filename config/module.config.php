@@ -12,6 +12,25 @@ return [
     'bt_payments' => [
         'taxation_country' => 'PL',
     ],
+    'router' => [
+        'routes' => [
+            'bt' => [
+                'type' => 'segment',
+                'options' => [
+                    'route' => '/bt/:action',
+                    'defaults' => [
+                        '__NAMESPACE__' => __NAMESPACE__ . '\Controller',
+                        'controller' => 'WebHooks',
+                    ],
+                ],
+            ],
+        ],
+    ],
+    'controllers' => [
+        'invokables' => [
+            __NAMESPACE__ . '\Controller\WebHooks' => __NAMESPACE__ . '\Controller\WebHooksController',
+        ],
+    ],
     'service_manager' => [
         'invokables' => [
             BT_CUSTOMERS_SERVICE => 'BraintreePayments\Service\CustomersService',
