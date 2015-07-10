@@ -25,4 +25,16 @@ class WebHooksService extends AbstractService
         $this->initEnvironment();
         return \Braintree_WebhookNotification::verify($code);
     }
+
+    /**
+     * @param $signature
+     * @param $data
+     * @return \Braintree_WebhookNotification
+     * @throws \Braintree_Exception_InvalidSignature
+     */
+    public function parse($signature, $data)
+    {
+        $this->initEnvironment();
+        return \Braintree_WebhookNotification::parse($signature, $data);
+    }
 }
