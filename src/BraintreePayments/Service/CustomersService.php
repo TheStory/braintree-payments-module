@@ -55,12 +55,10 @@ class CustomersService extends AbstractService
         try {
             return \Braintree_Customer::find($id);
         } catch (\Braintree_Exception_NotFound $e) {
+            throw $e;
         } catch (\Exception $e) {
-            var_dump($e);
             throw $e;
         }
-
-        return null;
     }
 
     /**
