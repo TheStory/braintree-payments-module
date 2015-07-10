@@ -8,14 +8,17 @@
 
 namespace BraintreePayments\Controller;
 
+use BraintreePayments\Service\WebHooksService;
 use Common\Controller\AbstractController;
 
 class WebHooksController extends AbstractController
 {
     public function renewSubscriptionAction()
     {
-        if ($this->params()->fromQuery('bt_challenge')) {
-            echo \Braintree_WebhookNotification::verify($this->params()->fromQuery('bt_challenge'));
+        if ($challenge = $this->params()->fromQuery('bt_challenge')) {
+            /** @var WebHooksService $service */
+            $service = $this->getServiceLocator()->get(BT_WEBHOOKS_SERVICE);
+            $service->verifyChallenge($challenge);
         }
 
         return $this->getResponse();
