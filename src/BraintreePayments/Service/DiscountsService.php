@@ -9,6 +9,7 @@
 namespace BraintreePayments\Service;
 
 // @todo Add caching
+use Zend\Cache\Storage\Adapter\AbstractAdapter;
 
 /**
  * Discount operations service
@@ -24,12 +25,19 @@ class DiscountsService extends AbstractService
      */
     public function all()
     {
-        $this->initEnvironment();
+        /** @var AbstractAdapter $cache */
+        $cache = $this->getServiceLocator()->get('cache.longlife');
 
-        /** @var \Braintree_Discount[] $all */
-        $all = \Braintree_Discount::all();
+        if ($cache->hasItem('discount_list')) {
+            $all = $cache->getItem('discount_list');
+        } else {
+            $this->initEnvironment();
+            /** @var \Braintree_Discount[] $all */
+            $all = \Braintree_Discount::all();
+            $this->validateResponse($all);
 
-        $this->validateResponse($all);
+            $cache->setItem('discount_list', $all);
+        }
 
         return $all;
     }
@@ -42,9 +50,7 @@ class DiscountsService extends AbstractService
      */
     public function find($id)
     {
-        $all = $this->all();
-
-        foreach ($all as $single) {
+        foreach ($this->all() as $single) {
             if ($single->id == $id) {
                 return $single;
             }

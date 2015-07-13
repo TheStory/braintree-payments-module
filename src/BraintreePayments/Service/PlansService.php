@@ -9,6 +9,7 @@
 namespace BraintreePayments\Service;
 
 // @todo Add caching
+use Zend\Cache\Storage\Adapter\AbstractAdapter;
 
 /**
  * Class PlansService
@@ -16,21 +17,27 @@ namespace BraintreePayments\Service;
  */
 class PlansService extends AbstractService
 {
-    private $plans;
-
     /**
      * @return \Braintree_Plan[]
      * @throws \Exception
      */
     public function all()
     {
-        $this->initEnvironment();
+        /** @var AbstractAdapter $cache */
+        $cache = $this->getServiceLocator()->get('cache.longlife');
 
-        $plans = \Braintree_Plan::all();
+        if ($cache->hasItem('plan_list')) {
+            $all = $cache->getItem('plan_list');
+        } else {
+            $this->initEnvironment();
+            /** @var \Braintree_Plan[] $all */
+            $all = \Braintree_Plan::all();
+            $this->validateResponse($all);
 
-        $this->validateResponse($plans);
+            $cache->setItem('plan_list', $all);
+        }
 
-        return $plans;
+        return $all;
     }
 
     /**
@@ -39,11 +46,7 @@ class PlansService extends AbstractService
      */
     public function find($id)
     {
-        if (!$this->plans) {
-            $this->plans = $this->all();
-        }
-
-        foreach ($this->plans as $plan) {
+        foreach ($this->all() as $plan) {
             if ($plan->id == $id) {
                 return $plan;
             }
