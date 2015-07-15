@@ -230,16 +230,18 @@ class AbstractStandardCustomer extends AbstractUpdateableEntity implements Custo
      */
     public function hydrateFormData($data)
     {
-        $customerData = $data['customer'];
+        if (isset($data['customer'])) {
+            $customerData = $data['customer'];
 
-        $this->setAddress($customerData['address'])
-            ->setCompanyName($customerData['companyName'])
-            ->setPostalCode($customerData['postalCode'])
-            ->setCity($customerData['city'])
-            ->setCountry($customerData['country'])
-            ->setFirstName($customerData['firstName'])
-            ->setLastName($customerData['lastName'])
-            ->setVatNumber($customerData['vatNumber']);
+            $this->setAddress($customerData['address'])
+                ->setCompanyName($customerData['companyName'])
+                ->setPostalCode($customerData['postalCode'])
+                ->setCity($customerData['city'])
+                ->setCountry($customerData['country'])
+                ->setFirstName($customerData['firstName'])
+                ->setLastName($customerData['lastName'])
+                ->setVatNumber($customerData['vatNumber']);
+        }
     }
 
     public function extractFormData()
