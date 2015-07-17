@@ -25,6 +25,10 @@ class VatValidator extends AbstractValidator
         self::WRONG_FORMAT => 'Wrong VAT number format',
     ];
 
+    protected $options = [
+        'force_validation' => false,
+    ];
+
     /**
      * Returns true if and only if $value meets the validation requirements
      *
@@ -40,22 +44,26 @@ class VatValidator extends AbstractValidator
      */
     public function isValid($value, $context = null)
     {
+        if ($this->getOption('force_validation')) {
+            return $this->validateEuVat($value);
+        }
+
         if (!isset($context['companyName']) || empty($context['companyName'])) {
             return true;
         }
 
-        if (isset($context['country']) && !empty($context['country'])) {
-            $countryCollection = new CountryCollection();
-            if (array_key_exists($context['country'], $countryCollection->getEuCountries())) {
-                $regexValidator = new Regex('/^((AT)?U[0-9]{8}|(BE)?0[0-9]{9}|(BG)?[0-9]{9,10}|(CY)?[0-9]{8}L|(CZ)?[0-9]{8,10}|(DE)?[0-9]{9}|(DK)?[0-9]{8}|(EE)?[0-9]{9}|(EL|GR)?[0-9]{9}|(ES)?[0-9A-Z][0-9]{7}[0-9A-Z]|(FI)?[0-9]{8}|(FR)?[0-9A-Z]{2}[0-9]{9}|(GB)?([0-9]{9}([0-9]{3})?|[A-Z]{2}[0-9]{3})|(HU)?[0-9]{8}|(IE)?[0-9]S[0-9]{5}L|(IT)?[0-9]{11}|(LT)?([0-9]{9}|[0-9]{12})|(LU)?[0-9]{8}|(LV)?[0-9]{11}|(MT)?[0-9]{8}|(NL)?[0-9]{9}B[0-9]{2}|(PL)?[0-9]{10}|(PT)?[0-9]{9}|(RO)?[0-9]{2,10}|(SE)?[0-9]{12}|(SI)?[0-9]{8}|(SK)?[0-9]{10})$/');
-
-                if (!$regexValidator->isValid($value)) {
-                    $this->error(self::WRONG_FORMAT);
-                    return false;
-                }
-            }
+        $countryCollection = new CountryCollection();
+        if (array_key_exists($context['country'], $countryCollection->getEuCountries())) {
+            return $this->validateEuVat($value);
         }
 
-        return true;
+        return false;
+    }
+
+    protected function validateEuVat($value)
+    {
+        $regexValidator = new Regex('/^((AT)?U[0-9]{8}|(BE)?0[0-9]{9}|(BG)?[0-9]{9,10}|(CY)?[0-9]{8}L|(CZ)?[0-9]{8,10}|(DE)?[0-9]{9}|(DK)?[0-9]{8}|(EE)?[0-9]{9}|(EL|GR)?[0-9]{9}|(ES)?[0-9A-Z][0-9]{7}[0-9A-Z]|(FI)?[0-9]{8}|(FR)?[0-9A-Z]{2}[0-9]{9}|(GB)?([0-9]{9}([0-9]{3})?|[A-Z]{2}[0-9]{3})|(HU)?[0-9]{8}|(IE)?[0-9]S[0-9]{5}L|(IT)?[0-9]{11}|(LT)?([0-9]{9}|[0-9]{12})|(LU)?[0-9]{8}|(LV)?[0-9]{11}|(MT)?[0-9]{8}|(NL)?[0-9]{9}B[0-9]{2}|(PL)?[0-9]{10}|(PT)?[0-9]{9}|(RO)?[0-9]{2,10}|(SE)?[0-9]{12}|(SI)?[0-9]{8}|(SK)?[0-9]{10})$/');
+        $this->error(self::WRONG_FORMAT);
+        return $regexValidator->isValid($value);
     }
 }

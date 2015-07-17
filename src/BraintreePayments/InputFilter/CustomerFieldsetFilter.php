@@ -103,7 +103,7 @@ class CustomerFieldsetFilter extends InputFilter
                     [
                         'name'    => 'string_length',
                         'options' => [
-                            'min' => 2,
+                            'min' => 1,
                             'max' => 100,
                         ],
                     ],

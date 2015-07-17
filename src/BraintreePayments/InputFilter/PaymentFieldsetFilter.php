@@ -63,14 +63,6 @@ class PaymentFieldsetFilter extends InputFilter
                 'filters'    => [
                     ['name' => 'string_trim'],
                     ['name' => 'strip_tags'],
-                    [
-                        'name'    => 'callback',
-                        'options' => [
-                            'callback' => function ($value) {
-                                return str_replace(' ', '', $value);
-                            }
-                        ],
-                    ],
                 ],
                 'validators' => [
                     [
@@ -80,6 +72,7 @@ class PaymentFieldsetFilter extends InputFilter
                             'max' => 4,
                         ],
                     ],
+                    ['name' => 'digits'],
                 ],
             ]
         );
