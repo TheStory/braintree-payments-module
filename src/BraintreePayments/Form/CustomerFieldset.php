@@ -21,14 +21,14 @@ class CustomerFieldset extends Fieldset implements InputFilterProviderInterface
     {
         parent::__construct('customer');
 
-        $this->setLabel('Customer data');
+        $this->setLabel(_('Customer data'));
 
         $this->add(
             [
                 'name'    => 'firstName',
                 'type'    => 'text',
                 'options' => [
-                    'label' => 'First Name',
+                    'label' => _('First Name'),
                 ],
             ]
         );
@@ -38,7 +38,7 @@ class CustomerFieldset extends Fieldset implements InputFilterProviderInterface
                 'name'    => 'lastName',
                 'type'    => 'text',
                 'options' => [
-                    'label' => 'Last Name',
+                    'label' => _('Last Name'),
                 ],
             ]
         );
@@ -48,7 +48,7 @@ class CustomerFieldset extends Fieldset implements InputFilterProviderInterface
                 'name'    => 'companyName',
                 'type'    => 'text',
                 'options' => [
-                    'label' => 'Company name',
+                    'label' => _('Company name'),
                 ],
             ]
         );
@@ -58,7 +58,7 @@ class CustomerFieldset extends Fieldset implements InputFilterProviderInterface
                 'name'    => 'address',
                 'type'    => 'text',
                 'options' => [
-                    'label' => 'Address',
+                    'label' => _('Address'),
                 ],
             ]
         );
@@ -68,7 +68,7 @@ class CustomerFieldset extends Fieldset implements InputFilterProviderInterface
                 'name'    => 'vatNumber',
                 'type'    => 'text',
                 'options' => [
-                    'label' => 'VAT Number',
+                    'label' => _('VAT Number'),
                 ],
             ]
         );
@@ -78,7 +78,7 @@ class CustomerFieldset extends Fieldset implements InputFilterProviderInterface
                 'name'    => 'city',
                 'type'    => 'text',
                 'options' => [
-                    'label' => 'City',
+                    'label' => _('City'),
                 ],
             ]
         );
@@ -88,9 +88,9 @@ class CustomerFieldset extends Fieldset implements InputFilterProviderInterface
                 'name'    => 'country',
                 'type'    => 'select',
                 'options' => [
-                    'label'         => 'Country',
+                    'label'         => _('Country'),
                     'value_options' => CountryCollection::getAllCountries(),
-                    'empty_option'  => '-- Select from list --'
+                    'empty_option'  => _('-- Select from list --')
                 ],
             ]
         );
@@ -100,7 +100,7 @@ class CustomerFieldset extends Fieldset implements InputFilterProviderInterface
                 'name'    => 'postalCode',
                 'type'    => 'text',
                 'options' => [
-                    'label' => 'Postal code',
+                    'label' => _('Postal code'),
                 ],
             ]
         );

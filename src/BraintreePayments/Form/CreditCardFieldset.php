@@ -18,7 +18,7 @@ class CreditCardFieldset extends Fieldset implements InputFilterProviderInterfac
     {
         parent::__construct('creditCard');
 
-        $this->setLabel('Credit Card');
+        $this->setLabel(_('Credit Card'));
 
         $this->add(
             [
@@ -29,7 +29,7 @@ class CreditCardFieldset extends Fieldset implements InputFilterProviderInterfac
                     'autocomplete' => 'off',
                 ],
                 'options'    => [
-                    'label' => 'Cardholder name',
+                    'label' => _('Cardholder name'),
                 ],
             ]
         );
@@ -43,7 +43,7 @@ class CreditCardFieldset extends Fieldset implements InputFilterProviderInterfac
                     'autocomplete' => 'off',
                 ],
                 'options'    => [
-                    'label' => 'Credit card number',
+                    'label' => _('Credit card number'),
                 ],
             ]
         );
@@ -57,7 +57,7 @@ class CreditCardFieldset extends Fieldset implements InputFilterProviderInterfac
                     'autocomplete' => 'off',
                 ],
                 'options'    => [
-                    'label' => 'CVV',
+                    'label' => _('CVV'),
                 ],
             ]
         );
@@ -68,9 +68,9 @@ class CreditCardFieldset extends Fieldset implements InputFilterProviderInterfac
                 'name'    => 'ccMonth',
                 'type'    => 'select',
                 'options' => [
-                    'label'         => 'Month',
+                    'label'         => _('Month'),
                     'value_options' => array_combine($monthsRange, $monthsRange),
-                    'empty_option'  => '-- Month --',
+                    'empty_option'  => _('-- Month --'),
                     'value'         => date('m'),
                 ],
             ]
@@ -82,9 +82,9 @@ class CreditCardFieldset extends Fieldset implements InputFilterProviderInterfac
                 'name'    => 'ccYear',
                 'type'    => 'select',
                 'options' => [
-                    'label'         => 'Year',
+                    'label'         => _('Year'),
                     'value_options' => array_combine($yearsRange, $yearsRange),
-                    'empty_option'  => '-- Year --',
+                    'empty_option'  => _('-- Year --'),
                 ],
             ]
         );
