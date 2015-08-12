@@ -35,17 +35,6 @@ interface CustomerInterface
     /**
      * @return string|null
      */
-    public function getDiscountId();
-
-    /**
-     * @param string $id
-     * @return CustomerInterface
-     */
-    public function setDiscountId($id);
-
-    /**
-     * @return string|null
-     */
     public function getCreditCard();
 
     /**

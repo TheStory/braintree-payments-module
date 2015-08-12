@@ -32,16 +32,36 @@ class SubscriptionsService extends AbstractService
      *
      * @param $paymentToken
      * @param $planId
+     * @param $price
+     * @param $currency
      * @return \Braintree_Result_Error|\Braintree_Subscription
      * @throws \Exception
      */
-    public function createForToken($paymentToken, $planId)
+    public function createForToken($paymentToken, $planId, $price, $currency)
     {
         $this->initEnvironment();
+
+        // get merchant account for provided currency
+
+        $merchantAccounts = $this->getModuleConfiguration()['merchant_accounts'];
+
+        $currentMerchantAccountId = null;
+        foreach ($merchantAccounts as $key => $value) {
+            if ($key == $currency) {
+                $currentMerchantAccountId = $value;
+                break;
+            }
+        }
+
+        if (!$currentMerchantAccountId) {
+            throw new \Exception('Wrong currency provided');
+        }
 
         $result = \Braintree_Subscription::create([
             'paymentMethodToken' => $paymentToken,
             'planId' => $planId,
+            'price' => $price,
+            'merchantAccountId' => $currentMerchantAccountId
         ]);
 
         $this->validateResponse($result);

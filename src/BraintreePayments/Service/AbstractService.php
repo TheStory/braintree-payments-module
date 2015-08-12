@@ -50,7 +50,7 @@ abstract class AbstractService implements ServiceLocatorAwareInterface
     protected function initEnvironment()
     {
         if ($this->isInitialized === false) {
-            $config = $this->getServiceLocator()->get('config')['bt_payments'];
+            $config = $this->getModuleConfiguration();
 
             \Braintree_Configuration::environment($config['environment']);
             \Braintree_Configuration::merchantId($config['merchant_id']);
@@ -84,5 +84,15 @@ abstract class AbstractService implements ServiceLocatorAwareInterface
             }
             throw new \Exception(implode(' ', $errorMessages));
         }
+    }
+
+    /**
+     * Get module configuration
+     *
+     * @return array
+     */
+    protected function getModuleConfiguration()
+    {
+        return $this->getServiceLocator()->get('config')['bt_payments'];
     }
 }

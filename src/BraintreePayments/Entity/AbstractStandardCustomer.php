@@ -33,10 +33,10 @@ class AbstractStandardCustomer extends AbstractUpdateableEntity implements Custo
      */
     protected $subscriptionId;
     /**
-     * @var string
-     * @Column(type="string")
+     * @var int
+     * @Column(type="integer")
      */
-    protected $discounts;
+    protected $discount;
     /**
      * @var string
      */
@@ -179,24 +179,6 @@ class AbstractStandardCustomer extends AbstractUpdateableEntity implements Custo
     public function setSubscriptionId($id)
     {
         $this->subscriptionId = $id;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDiscountId()
-    {
-        return $this->discountId;
-    }
-
-    /**
-     * @param string $discountId
-     * @return AbstractStandardCustomer
-     */
-    public function setDiscountId($discountId)
-    {
-        $this->discountId = $discountId;
         return $this;
     }
 
@@ -362,25 +344,20 @@ class AbstractStandardCustomer extends AbstractUpdateableEntity implements Custo
     }
 
     /**
-     * @return array
+     * @return int
      */
-    public function getDiscounts()
+    public function getDiscount()
     {
-        return json_decode($this->discounts) ?: [];
+        return $this->discount;
     }
 
     /**
-     * Array of discount structures:
-     * array['product'] - discounted product ID
-     * array['lang'] - language ID
-     * array['discount'] - BrainTree discount ID
-     *
-     * @param array $discounts
+     * @param int $discount
      * @return AbstractStandardCustomer
      */
-    public function setDiscounts(array $discounts)
+    public function setDiscount($discount)
     {
-        $this->discounts = json_encode($discounts);
+        $this->discount = $discount;
         return $this;
     }
 
