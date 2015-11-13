@@ -77,7 +77,7 @@ class TaxesService implements ServiceLocatorAwareInterface
         } else {
             // API request for all countries data
             $client = new Client();
-            $client->setUri('http://euvatrates.com/rates.json')
+            $client->setUri('https://raw.githubusercontent.com/modmore/euvatrates.com/master/rates.json')
                 ->setOptions([
                     'ssltransport' => 'tls',
                     'sslverifypeer' => false,
