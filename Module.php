@@ -1,25 +1,9 @@
 <?php
-namespace BraintreePayments;
+/**
+ * Copyright: STORY DESIGN Sp. z o.o.
+ * Author: Przemyslaw Kublin
+ * Date: 2015-11-19
+ * Time: 10:25
+ */
 
-use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
-
-class Module implements AutoloaderProviderInterface
-{
-    // @todo Check module configuration
-
-    public function getAutoloaderConfig()
-    {
-        return array(
-            'Zend\Loader\StandardAutoloader' => array(
-                'namespaces' => array(
-                    __NAMESPACE__ => __DIR__ . '/src/' . str_replace('\\', '/', __NAMESPACE__),
-                ),
-            ),
-        );
-    }
-
-    public function getConfig()
-    {
-        return include __DIR__ . '/config/module.config.php';
-    }
-}
+require_once __DIR__ . '/src/BraintreePayments/Module.php';
