@@ -1,9 +1,7 @@
 <?php
 namespace BraintreePayments;
 
-use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
-
-class Module implements AutoloaderProviderInterface
+class Module
 {
     public function getConfig()
     {
